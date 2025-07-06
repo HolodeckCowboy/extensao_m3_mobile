@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/calendarLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calendar Events"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/calendarTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendarLabel"
+        android:layout_marginTop="8dp"
+        android:minHeight="120dp"/>
+
+    <Button
+        android:id="@+id/syncButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendarTextView"
+        android:text="Sync Calendar"/>
+
+    <TextView
+        android:id="@+id/eventsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/syncButton"
+        android:layout_marginTop="16dp"
+        android:text="Available Events"
+        android:textSize="18sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/eventsLabel"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/createEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eventsRecyclerView"
+        android:text="Create New Event"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/contactUsButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:text="Contact"
+        android:visibility="gone"/>
+</RelativeLayout>
