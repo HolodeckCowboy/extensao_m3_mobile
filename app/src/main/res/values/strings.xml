@@ -1,3 +1,51 @@
 <resources>
-    <string name="app_name">Prototipo</string>
+    <string name="app_name">Projeto de Extensão</string>
+
+    <string name="login_title">Login do App de Eventos</string>
+    <string name="login_username_hint">Usuário</string>
+    <string name="login_password_hint">Senha</string>
+    <string name="login_button">Entrar</string>
+    <string name="login_invalid_credentials">Credenciais inválidas</string>
+
+    <string name="main_sync_calendar">Sincronizar Calendário</string>
+    <string name="main_available_events">Eventos Disponíveis</string>
+    <string name="main_create_event_description">Criar Evento</string>
+    <string name="main_contact_us_description">Fale Conosco</string>
+    <string name="main_contact_us_message">Olá, sou um usuário e preciso de assistência.</string>
+    <string name="main_no_messaging_app">Nenhum aplicativo de mensagens encontrado.</string>
+    <string name="main_no_events_to_sync">Nenhum evento para sincronizar.</string>
+    <string name="main_no_calendar_app">Nenhum aplicativo de calendário encontrado.</string>
+
+    <string name="item_event_name">Nome do Evento</string>
+    <string name="item_event_date">Data</string>
+
+    <string name="register_button">Inscrever-se e Adicionar ao Calendário</string>
+    <string name="register_event_not_found">Evento não encontrado</string>
+    <string name="register_date_time_format">Em %1$s às %2$s</string>
+    <string name="register_success_message">Inscrição realizada para %1$s</string>
+
+    <string name="create_title">Criar Novo Evento</string>
+    <string name="create_event_name_hint">Nome do Evento</string>
+    <string name="create_event_select_date">Selecione a data (DD/MM/AAAA)</string>
+    <string name="create_event_date_hint">Data (DD/MM/AAAA)</string>
+    <string name="create_event_select_time">Selecione a hora</string>
+    <string name="create_event_description_hint">Descrição do Evento</string>
+    <string name="create_event_button">Criar Evento</string>
+    <string name="create_success">Evento Criado!</string>
+    <string name="create_fill_all_fields">Por favor, preencha todos os campos</string>
+
+    <string name="notification_channel_name">Notificações de Eventos</string>
+    <string name="notification_channel_description">Canal para alertas de criação de eventos</string>
+    <string name="notification_title">Novo Evento Criado!</string>
+    <string name="notification_text_format">%1$s em %2$s</string>
+
+    <string name="event1_name">Conferência de Tecnologia 2025</string>
+    <string name="event1_desc">Uma conferência anual sobre o futuro da tecnologia.</string>
+    <string name="event2_name">Cúpula de Marketing</string>
+    <string name="event2_desc">Uma cúpula para profissionais de marketing discutirem novas tendências.</string>
+    <string name="event3_name">Workshop de Design</string>
+    <string name="event3_desc">Um workshop prático para designers de UI/UX.</string>
+    <string name="event4_name">Lançamento do App Móvel</string>
+    <string name="event4_desc">Junte-se a nós para o lançamento do nosso novo aplicativo móvel.</string>
+
 </resources>

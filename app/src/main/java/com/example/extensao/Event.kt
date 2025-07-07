@@ -1,11 +1,12 @@
 package com.example.extensao
 
-import org.threeten.bp.LocalDateTime
+import java.io.Serializable
 
 data class Event(
     val id: Int,
-    val title: String,
+    val name: String,
+    val date: String,
+    val time: String,
     val description: String,
-    val dateTime: LocalDateTime,
-    val enrolledUsers: MutableList<String> = mutableListOf()
-)
+    var isUserEnrolled: Boolean = false
+) : Serializable

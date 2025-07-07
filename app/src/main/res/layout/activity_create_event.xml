@@ -1,37 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".CreateEventActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewCreateTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="@string/create_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-        <EditText
-            android:id="@+id/titleEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Event Title"
-            android:inputType="textCapWords"/>
+    <EditText
+        android:id="@+id/editTextEventName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_event_name_hint"
+        app:layout_constraintTop_toBottomOf="@id/textViewCreateTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:autofillHints="name"
+        android:inputType="textCapWords"/>
 
-        <EditText
-            android:id="@+id/descriptionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Event Description"
-            android:inputType="textMultiLine"/>
+    <TextView
+        android:id="@+id/textViewSelectDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/editTextBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:hint="@string/create_event_select_date"
+        android:padding="12dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextEventName" />
 
-        <!-- In real app, add date/time pickers here -->
+    <TextView
+        android:id="@+id/textViewSelectTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/editTextBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:hint="@string/create_event_select_time"
+        android:padding="12dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSelectDate" />
 
-        <Button
-            android:id="@+id/createButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Create Event"/>
-    </LinearLayout>
-</ScrollView>
+    <EditText
+        android:id="@+id/editTextEventDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="@string/create_event_description_hint"
+        android:gravity="top"
+        android:inputType="textMultiLine|textCapSentences"
+        app:layout_constraintTop_toBottomOf="@id/textViewSelectTime"
+        app:layout_constraintBottom_toTopOf="@id/buttonCreateEvent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="none" />
+
+    <Button
+        android:id="@+id/buttonCreateEvent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_event_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

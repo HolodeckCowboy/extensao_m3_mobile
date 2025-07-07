@@ -5,16 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.threeten.bp.format.DateTimeFormatter
+import com.example.extensao.R
+import com.example.extensao.Event
+import com.example.extensao.DateFormatter
 
-class EventsAdapter(
+class EventAdapter(
     private val events: List<Event>,
-    private val onItemClick: (Int) -> Unit
-) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+    private val onEventClick: (Event) -> Unit
+) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.eventTitle)
-        val date: TextView = view.findViewById(R.id.eventDate)
+        val eventName: TextView = view.findViewById(R.id.textViewEventName)
+        val eventDate: TextView = view.findViewById(R.id.textViewEventDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -25,9 +27,10 @@ class EventsAdapter(
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        holder.title.text = event.title
-        holder.date.text = event.dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE)
-        holder.itemView.setOnClickListener { onItemClick(event.id) }
+        holder.eventName.text = event.name
+        val formattedDate = DateFormatter.formatToDisplay(event.date)
+        holder.eventDate.text = "$formattedDate às ${event.time}"
+        holder.itemView.setOnClickListener { onEventClick(event) }
     }
 
     override fun getItemCount() = events.size

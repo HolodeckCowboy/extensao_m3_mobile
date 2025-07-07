@@ -1,37 +1,46 @@
 package com.example.extensao
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.extensao.EventManager
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var usernameEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        usernameEditText = findViewById(R.id.usernameEditText)
-        passwordEditText = findViewById(R.id.passwordEditText)
-        loginButton = findViewById(R.id.loginButton)
+        // Initialize event data with context for localization
+        EventManager.initializeEvents(applicationContext)
+
+        val usernameInput = findViewById<EditText>(R.id.editTextUsername)
+        val passwordInput = findViewById<EditText>(R.id.editTextPassword)
+        val loginButton = findViewById<Button>(R.id.buttonLogin)
 
         loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            val username = usernameInput.text.toString()
+            val password = passwordInput.text.toString()
 
-            val user = FakeDataSource.authenticate(username, password)
-            if (user != null) {
-                startActivity(Intent(this, DashboardActivity::class.java).apply {
-                    putExtra("USERNAME", username)
-                    putExtra("IS_ADMIN", user.isAdmin)
-                })
-            } else {
-                Toast.makeText(this, "Credenciais inválidas", Toast.LENGTH_SHORT).show()
+            when {
+                username == "user" && password == "user" -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("USER_TYPE", "USER")
+                    startActivity(intent)
+                    finish()
+                }
+                username == "admin" && password == "admin" -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("USER_TYPE", "ADMIN")
+                    startActivity(intent)
+                    finish()
+                }
+                else -> {
+                    Toast.makeText(this, getString(R.string.login_invalid_credentials), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -1,95 +1,142 @@
 package com.example.extensao
 
+import android.Manifest
+import android.app.DatePickerDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
+import android.app.TimePickerDialog
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import org.threeten.bp.LocalDateTime
+import com.example.extensao.Event
+import com.example.extensao.EventManager
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CreateEventActivity : AppCompatActivity() {
-    private lateinit var titleEditText: EditText
-    private lateinit var descriptionEditText: EditText
-    private lateinit var createButton: Button
+
+    private val CHANNEL_ID = "event_channel"
+    private var selectedDateForStorage: String = ""
+    private var selectedTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
 
-        titleEditText = findViewById(R.id.titleEditText)
-        descriptionEditText = findViewById(R.id.descriptionEditText)
-        createButton = findViewById(R.id.createButton)
+        createNotificationChannel()
+
+        val nameInput = findViewById<EditText>(R.id.editTextEventName)
+        val descriptionInput = findViewById<EditText>(R.id.editTextEventDescription)
+        val createButton = findViewById<Button>(R.id.buttonCreateEvent)
+        val selectDateButton = findViewById<TextView>(R.id.textViewSelectDate)
+        val selectTimeButton = findViewById<TextView>(R.id.textViewSelectTime)
+
+        selectDateButton.setOnClickListener {
+            showDatePickerDialog(selectDateButton)
+        }
+
+        selectTimeButton.setOnClickListener {
+            showTimePickerDialog(selectTimeButton)
+        }
 
         createButton.setOnClickListener {
-            val title = titleEditText.text.toString()
-            val description = descriptionEditText.text.toString()
-            val dateTime = LocalDateTime.now().plusDays(7)
+            val name = nameInput.text.toString()
+            val description = descriptionInput.text.toString()
 
-            if (title.isNotBlank()) {
+            if (name.isNotBlank() && description.isNotBlank() && selectedDateForStorage.isNotEmpty() && selectedTime.isNotEmpty()) {
                 val newEvent = Event(
-                    id = 0,
-                    title = title,
-                    description = description,
-                    dateTime = dateTime
+                    id = (EventManager.getAllEvents().size + 1),
+                    name = name,
+                    date = selectedDateForStorage,
+                    time = selectedTime,
+                    description = description
                 )
-                FakeDataSource.addEvent(newEvent)
-                sendNotification(title, dateTime.toString())
+                EventManager.addEvent(newEvent)
+
+                sendNotification(newEvent)
+
+                Toast.makeText(this, getString(R.string.create_success), Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(this, "Título é obrigatório", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.create_fill_all_fields), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun sendNotification(title: String, date: String) {
-        val intent = Intent(this, DashboardActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
+    private fun showDatePickerDialog(dateTextView: TextView) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        // Generate unique ID
-        val notificationId = System.currentTimeMillis().toInt()
+        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val calendarSelected = Calendar.getInstance()
+            calendarSelected.set(selectedYear, selectedMonth, selectedDay)
 
-        // Build notification
-        val builder = NotificationCompat.Builder(this, "event_channel")
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Novo evento: $title")
-            .setContentText("Data: $date")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText("Novo evento '$title' foi agendado para a data $date. Clique para mais detalhes"))
+            val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateForDisplay = displayFormat.format(calendarSelected.time)
+            dateTextView.text = dateForDisplay
 
-        with(NotificationManagerCompat.from(this)) {
-            notify(notificationId, builder.build())
-        }
+            val storageFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            selectedDateForStorage = storageFormat.format(calendarSelected.time)
+
+        }, year, month, day)
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog.show()
+    }
+
+    private fun showTimePickerDialog(timeTextView: TextView) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
+            selectedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+            timeTextView.text = selectedTime
+        }, hour, minute, true)
+
+        timePickerDialog.show()
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "event_channel",
-                "Novos eventos",
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "Novo evento"
+            val name = getString(R.string.notification_channel_name)
+            val descriptionText = getString(R.string.notification_channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
             }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
+    private fun sendNotification(event: Event) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                return
+            }
+        }
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(getString(R.string.notification_title))
+            .setContentText(getString(R.string.notification_text_format, event.name, DateFormatter.formatToDisplay(event.date)))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(event.id, builder.build())
         }
     }
 }

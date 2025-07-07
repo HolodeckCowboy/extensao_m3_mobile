@@ -5,50 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterEventActivity">
 
     <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewEventNameDetail"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/login_title"
+        tools:text="@string/item_event_name"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="100dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <EditText
-        android:id="@+id/editTextUsername"
+    <TextView
+        android:id="@+id/textViewEventDateTimeDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/login_username_hint"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        tools:text="@string/item_event_date"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewEventNameDetail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextPassword"
+    <TextView
+        android:id="@+id/textViewEventDescriptionDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/editTextUsername"
+        tools:text="@string/create_event_description_hint"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewEventDateTimeDetail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/login_button"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
+        android:text="@string/register_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
