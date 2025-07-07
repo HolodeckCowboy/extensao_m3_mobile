@@ -7,8 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.extensao.EventManager
-import com.example.extensao.DateFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +27,6 @@ class RegisterEventActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.textViewEventNameDetail).text = event.name
 
-        // Use a função de formatação aqui
         val formattedDate = DateFormatter.formatToDisplay(event.date)
         findViewById<TextView>(R.id.textViewEventDateTimeDetail).text = getString(R.string.register_date_time_format, formattedDate, event.time)
         findViewById<TextView>(R.id.textViewEventDescriptionDetail).text = event.description

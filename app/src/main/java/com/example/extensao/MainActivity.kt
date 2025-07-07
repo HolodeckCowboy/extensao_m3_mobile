@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.extensao.EventAdapter
-import com.example.extensao.EventManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("EVENT_ID", event.id)
                 startActivity(intent)
             }
-        } else { // USER
+        } else {
             buttonEdit.visibility = View.GONE
             fabContactUs.visibility = View.VISIBLE
             recyclerView.adapter = EventAdapter(EventManager.getAllEvents()) { event ->
@@ -99,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             val startTime = sdf.parse(dateTime)?.time ?: continue
 
             calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime)
-            calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startTime + 3600000) // 1 hour duration
+            calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startTime + 3600000)
 
             if (calIntent.resolveActivity(packageManager) != null) {
                 startActivity(calIntent)
@@ -111,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh the list when returning to the activity
         (findViewById<RecyclerView>(R.id.recyclerViewEvents).adapter)?.notifyDataSetChanged()
     }
 }

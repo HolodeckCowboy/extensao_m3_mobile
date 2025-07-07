@@ -17,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.extensao.Event
-import com.example.extensao.EventManager
 import java.text.SimpleDateFormat
 import java.util.*
 

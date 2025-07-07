@@ -1,13 +1,11 @@
 package com.example.extensao
 
 import android.content.Context
-import com.example.extensao.R
 
 object EventManager {
 
     private val events = mutableListOf<Event>()
 
-    // A check to prevent adding events multiple times
     private var eventsInitialized = false
 
     fun initializeEvents(context: Context) {

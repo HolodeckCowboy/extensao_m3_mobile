@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.extensao.EventManager
 
 class LoginActivity : AppCompatActivity() {
 
@@ -14,7 +13,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Initialize event data with context for localization
         EventManager.initializeEvents(applicationContext)
 
         val usernameInput = findViewById<EditText>(R.id.editTextUsername)
